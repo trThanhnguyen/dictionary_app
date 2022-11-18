@@ -1,0 +1,122 @@
+=============
+C Programming
+=============
+
+===========
+Requirement
+===========
+
+    Create a simple dictionary application, follow the following steps:
+    
+    -------------------------------------
+    Step 1: define basic data structures:
+    -------------------------------------
+    + Information about each word and its meaning is store in a structure as follow:
+      struct Word {
+          unsigned char *word;  // word name
+          unsigned long offset; // offset of the meaning of the word in the dictionary file
+          struct Word *next;    // pointer to next word object
+      };
+    
+    + Declare an array of HASH_SIZE Word pointer, and use it as a hash table.
+      #define HASH_SIZE 63 // 26 letters in upper case + 26 letters in lower case + 10 number letters + Other lettes.
+      struct Word* hashdict[HASH_SIZE];
+
+    Hash Table
+    +--------+ --> +--------+ --> +--------+ --> +--------+ --> +--------+ --> +--------+ --> NULL
+    |  [0]   |     |  word  |     |  word  |     |  word  |     |  word  |     |  word  |
+    |        |     +--------+     +--------+     +--------+     +--------+     +--------+
+    |  word  |
+    +--------+ --> +--------+ --> +--------+ --> +--------+ --> +--------+ --> NULL
+    |  [1]   |     |  word  |     |  word  |     |  word  |     |  word  |
+    |        |     +--------+     +--------+     +--------+     +--------+
+    |  word  |
+    +--------+ --> +--------+ --> +--------+ --> NULL
+    |  [2]   |     |  word  |     |  word  |
+    |        |     +--------+     +--------+
+    |  word  |
+    +--------+ --> +--------+ --> +--------+ --> +--------+ --> NULL
+    |  [...] |     |  word  |     |  word  |     |  word  |
+    |        |     +--------+     +--------+     +--------+
+    |  word  |
+    +--------+ --> +--------+ --> +--------+ --> +--------+ --> NULL
+    |  [62]  |     |  word  |     |  word  |     |  word  |
+    |        |     +--------+     +--------+     +--------+
+    |  word  |
+    +--------+
+    
+    -------------------------------------
+    Step 2: Define some utility functions
+    -------------------------------------
+    + Function to create a new object of struct Word
+      - Prototype: struct Word* create_word (const char *w, unsigned long off)
+      - Purpose: 
+        Allocate memory for the word object
+        Allocate memory to store the word, and copy the parameter "w" to "word" field
+        Copy the parameter off to offset field
+        Return the created object
+      
+    + Define a hash function and use it to select a position in the hash table to insert a new word.
+      - Prototype: int hash_word (unsigned char *w)
+      - Purpose: 
+        Calculate a hash number (0 - 62) from w (based on the 1st letter).
+        Return the hash number.
+        
+    + Function to insert a word into the hash table
+      - Prototype: int insert_word (struct Word **hd, struct Word *wobject)
+      - Purpose:
+        Insert the wobject to the corresponding slot in the hash table hd
+        Return FALSE if the word has already existed in the hash table
+        Return TRUE  if the insertion is OK
+        
+    + Function to searh a word in the hash table
+      - Prototype: struct Word* search_word (struct Word **hd, unsigned char *word)
+      - Purpose:
+        Search the string contained in parameter "word" in the hash table hd.
+        Return the pointer to the corresponding word object.
+        If not exist, return NULL
+      
+    + Function to read the input file, and get the meaning of word
+      - Prototype: int get_meaning (unsigned char *buf, struct Word* wobject, FILE *dict_file)
+      - Purpose:
+        Read the content at offset "wobject->offset" in file "dict_file" and output to buffer "buf"
+        Return TRUE if the content exists
+        Return FALSE if not
+    
+    -------------------------------------
+    Step 3: Scan the dictionary data file
+    -------------------------------------
+    + Scan the input data file. Each time you meet a new word (specified by "#" character), insert
+      this word and offset of its meaning into the hash table
+      
+    -------------------------------------
+    Step 4: Search meaning of word
+    -------------------------------------
+    + After finish the scanning step, user could use this dictionary application as follow:
+      - User type a word
+      - Your program search in the hash table to get the word. After that, read the offset in the 
+        Word struct, and seek the file pointer to that offset in the dictionary file, and read the 
+        meaning of this word, and show it to user.
+
+    Input: 
+    1. gcc compiler (in cygwin, or putty (172.29.143.88, port 22)).
+    2. Data input file
+       \C_Course\01_Input\Exercise
+    3. Document about C programming
+       \C_Course\01_Input\Reference
+
+    Output:
+    1. Source code of program
+    
+    2. Executable file. Its name is "simple_dict.exe"
+       Example:
+       $simple_dict.exe "ABI"              <<== User type a word here
+       Application Binary Interface        <<== Meaning of "ABI" is displayed here
+      
+       $simple_dict.exe "hehe"             <<== User type a word here
+       Can not find "hehe"                 <<== An error message here
+
+    3. Document about detail implementation of your program
+       + Can use slide or text format.
+       + Try to explain your idea and implementation clearly.
+
