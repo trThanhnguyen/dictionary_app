@@ -1,0 +1,132 @@
+#ABI
+	Application Binary Interface
+#Access Link
+	Used in [1] as a synonym for  static chain pointer.
+#Activation Record
+	A data structure created on the stack when a C function is being called. Among other things it contains slots for local variables, temporaries, the actual function arguments, and the control link (also known asdynamic link) to the activation record of the calling function.
+#Aggregate Type
+	A C type, which is too large to be held solely in registers. When passing aggregate types as function parameters or as return values, GCC actually passes pointers to them, rather than the values themselves. Typical examples of aggregate types are structs with a  machine mode larger than DImode. References: function aggregate_value_p. 
+#Alignment Chain
+	The alignment chain of an instruction is used during branch shortening to determine alignment requirements. For further explanation, please refer to the comment at the definition of struct label_alignment. References: function compute_alignments.
+#Alternative
+	An insn pattern can support several alternatives, which means that the  constraints in its match_operandtemplate variables are comma separated lists, in which each element specifies the operands constraint for one alternative. This is used, for example, in the pattern for move instructions: Moves from memory (constraint m) to a register (constraint r) should generate a load instruction, whereas moves from a register to memory should generate a store. This difference can be described using two alternatives with the appropriate constraints.
+#AP
+	Argument pointer
+#Application Binary Interface
+	Defines the conventions for calling high-level language functions from within Assembler modules. This is important when interfacing with system libraries or when connecting programs written in different languages. Normally, there is only one ABI for an operating system running on a certain machine architecture. An ABI typically includes specifications for the following aspects: memory layout of variables of certain C types, e.g. the bit width of an int, a long int, etc. padding in structs (for better alignment)
+	-o Prameter passing on the stack (in which order, how to align, which parameters to pass in  registers)
+	-o Returning of function values
+#Argument Pointer
+	A hard register, which on somemachines is used as a pointer to incoming actual function parameters on the stack. Often, its use is deactivated by defining its register number equal to that of the  frame pointer register. If it is active, however, it must either be member of FIXED_REGISTERS and have a corresponding existing CPU register for this purpose, or it must be eliminable (most often to  FP) my means of  register elimination. References: [7], node Frame Registers at ARG_POINTER_REGNUM; GCC source at arg_pointer_rtx.
+#Assembler Output Template
+	Output template
+#Automatic Variable
+	A variable local to a function, whose storage is automatically released on function exit.
+#BFD Library
+	Binary file descriptor library. Mainly reads, translates, and writes object file formats and handles relocations. Used, for example, by gas and ld.
+#Binding Contour
+	A scope in C such as enclosed by a {. . . }-block. For example, a function body has an associated binding contour. References: struct binding_level; functions pushlevel and poplevel. 
+#Binding Level
+	A synonym for binding contour.
+#biv
+	A basic induction variable in loop optimization. References: loop.c
+#Block Stack
+	The stack of  binding contours. References: comment at definition of struct nesting.
+#Branch Shortening
+	Compiler pass, which determines (mostly on RISC machines) whether the range of each jump  instruction is short enough to use the shorter sequence of machine instructions for performing the jump (if such sequence exists). For example, a short form might be a single instruction allowing to specify the range as an immediate value, whereas a long form would require to load the range into a register and then use an extra insn for actually jumping.
+#LCM
+	Lazy code motion. This is a special form of GCSE.
+#libgcc
+	A library of support routines that can be linked with object files on the target. Should be compiled with a gcc binary outputting code for the target.
+#linkable
+	If a file is linkable, it can be used as input by a  link editor such as ld.
+#Link Editor
+	Combines a number of object and archive files, relocates their data and resolves symbol references, producing an  executable. When compiling a program, the link editor is usually the last step in the  toolchain. Hence, it works at  compiletime, as opposed to the  dynamic linker, which works at program load time or sometimes at runtime.
+#Linker
+	Commonly refers to the  link editor. In some rare cases, it may also denote the dynamic linker, but this is rather unusual.
+#loadable
+	A loadable file can be loaded into memory as a library along with a program.
+#Machine
+	A machine refers to the pair (CPU architecture, operating system). GCC distinguishes three contexts in which the term machine can be used: the  build machine, the host machine and the target machine. 
+#Machine Description
+	Comprises several files which must be implemented when a new target architecture is to be supported, in order to tell the compiler the set of CPU features that can be used. The files should be put beneath config/harchi/ and typically include a harchi.md file in RTL syntax with definitions of supportedinstruction patterns, and a harchi.h target macro file containing macro definitions that influence the internal behaviour of GCC
+#Machine Mode
+	A machine mode describes the size of an RTL data object such as a reg or a mem. This can be QImode for byte, DImode for word, etc. Machine modes are defined in machmode.def.
+#MD
+	machine description
+#MI Thunk
+	multiple inheritance thunk
+#Multilib
+	A mechanism gcc provides for cases where libgcc.a (libgcc) must be compiled in multiple versions. For example, this is the case when a target supports a compiler option that switches between big and little endian mode. 
+#Multiple Inheritance Thunk
+	A small function used in the implementation of multiple inheritance in C++. It adjusts
+#PCC
+	Portable C compiler. See [8], node 'Code Gen Option' at '-fpcc-struct-return'; macro PCC_STATIC_STRUCT_RETURN. PCE1 TI Program counter of current fetch packet in pipeline phase E1
+#PIC
+	position independent code
+#PLT
+	procedure linkage table
+#Position Independent Code
+	PIC code is used when precisely the same program code is to be run by several processes at different virtual addresses. The most prominent example are probably dynamic shared libraries. With such libraries, references to global variables cannot use absolute addresses, since they would be wrong in at least one of two processes running at different addresses. PIC code uses indirect addressing via the 'GOT' to solve this problem.
+#TLCL
+	The Linux Command Lines
+#Predicate
+	predicate function
+#Predicate Function
+	Part of 'match_operand' templates, which specifies the conditions that operands must meet in order to be accepted by this template. Unlike ! 'constraints', a nonmatching predicate makes its ! 'instruction pattern' reject the current instruction immediately. If no other instruction pattern matches, the compiler will abort with an error.
+#Predication
+	A synonym for 'conditional execution'.
+#Procedure Linkage Table
+	Similar to the 'GOT', procedure calls to globally defined functions cannot use absolute addresses, but must use the PLT as means of indirection. The PLT supports lazy procedure linkage, where the ! 'dynamic linker' looks up functions only at the first time they are actually called.
+#Prologue of a Function
+	Automatically generated statements at the top of each function, which are responsible for setting up the ! 'stack frame'. This includes saving the old value of FP, saving 'SP' in 'FP', and saving registers, which are to be preserved, on the stack.
+#Pseudo
+	'pseudo register'
+#Register Save Area
+	A part of the  stack frame which is used for saving registers in the  prologue of a function and restoring them in the  epilogue of a function. This allows for the caller to safely assume that these registers keep their values across function calls. Please do not confuse this mechanism with caller saves ( caller save area), which are done by the caller rather than by the callee.
+#Register Scan
+	A compiler pass which is run before  CSE and Loop Optimization and finds the first and last use of each  pseudo register. References: comment before function reg_scan in regclass.c
+#Register Spilling
+	A  pseudo register can be spilled from a hard register, depriving the pseudo of its home in the hard register, because the latter is needed elsewhere.
+#Register Transfer Language
+	The intermediate language used by GCC for representing user programs. As opposed to the  tree representation, RTL is more like a sequence of instructions. Unlike assembler code, it looks very similar on all  machines, so that the same compiler passes can be used for all target architectures and all input languages.
+#Register Windows
+	With register windows, the register in which a function sees an argument is not necessarily the same as the one in which the caller passed the argument.
+#Reload
+	reload pass
+#Reload Pass
+	Mainly performs the following tasks: satisfy unmet  constraints by generating  RTL instructions for copying operands to other kinds of storage, e.g. from memory to a register renumber  pseudo registers with the  hardware registers they were allocated during register allocation (function alter_reg) perform register elimination (function eliminate_regs_in_insn) save and restore  call-clobbered (clobber) registers around calls (main functions are setup_save_areas and save_call_clobbered_regs)
+#Reload Register
+	A hard register used by the reload pass for temporarily storing values in. RTL  register transfer language
+#SIMD
+	Single instruction, multiple data.
+#SP
+	Stack pointer
+#Specs Language
+	Specification language, used for configuring the behaviour of the compiler driver gcc, in particular with which options to call the compiler, the assembler and the linker.
+#Spilling
+	register spilling
+#SSA
+	Static single assignment
+#Stack Frame
+	A synonym for Activation Record.
+#Standard Action
+	A feature of a programming language (jump, function call, arithmetic, etc.), for which a  standard name exists in GCC.
+#Standard Names
+	Well-known names of standard operations the compiler is aware of and can employ for achieving certain kinds of results. Examples are movM for moving between memory and registers as well as from registers to registers, addM3 for adding registers, and bCOND for conditional branching. Which  standard actions are available can be defined in the  machine description by means of  expander
+definitions and named  instruction patterns.
+#Statement Tree
+	The chain of statements, built up by the parser for a C function.
+#Static Chain Pointer
+	Slot in the  stack frame pointing to the stack frame of the first ancestor function in the  call chain, which represents an enclosing scope of the current function. This is needed in the implementation of lexical scope for nested functions. [1] uses the term access link for this pointer and explains the concept in detail.
+#Static Link
+	A synonym for static chain pointer.
+#Storage Class
+	One of the following C keywords: auto, extern, register, typedef, inline, __thread. The parser represents this as token SCSPEC. Note that static is no SCSPEC token, but a STATIC.
+#0983872507
+	My phone number, heheh :)
+#DTV
+	A very strong team !!!
+#_XXX
+	What do you want ???
+
